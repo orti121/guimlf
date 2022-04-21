@@ -5,18 +5,17 @@ import numpy as np
 
 # Abrimos el puerto del arduino a 9600
 #arduino = serial.Serial('COM3', 57600)
-# Ratio de conversión mm a steps
-ustep = 16.
-stepturn = 20.
-turns = 10.
-dist = 30.
-#ratio = (turns*stepturn*ustep)/dist
-ratio = 106
-print (ratio)      
+
+limits_xyz = [20, 30, 20] # Límite en modo XYZ
+limits_angle = [45, 45, 45] # Límite en modo angular
 
 sg.SetOptions(text_justification='right')      
 
-layout = [[sg.Text('Ingresar Objetivo en mm (max.38)', font=('Helvetica', 13), key='head')],            
+
+layout = [[sg.Text('Ingresar Posición deseada', font=('Helvetica', 13), key='head')],
+
+		  [limits_xyz
+		  ],
 
           [sg.In(default_text='0', size=(4, 1), key='in11'), sg.In(default_text='0', size=(4, 1), key='in12'), sg.In(default_text='0', size=(4, 1), key='in13'),
           sg.ProgressBar(38, orientation='h', size=(5, 20), key='progbar11'),

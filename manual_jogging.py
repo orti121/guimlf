@@ -12,6 +12,9 @@ robot_serial = SerialControl()
 # robot_serial = SerialControl("COM5") #for pc
 robot_serial.open_serial()
 
+
+
+
 try:
     while True:
         selector = input("ang or XYZ or home? ")
