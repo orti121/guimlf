@@ -14,13 +14,14 @@ sg.SetOptions(text_justification='right')
 
 layout = [[sg.Text('Ingresar Posición deseada', font=('Helvetica', 13), key='head')],
 
-		  [limits_xyz
-		  ],
+		  [sg.Text('Modo: ') , sg.Drop(values=('XYZ','Angular'), auto_size_text=True, key='selector')],
 
           [sg.In(default_text='0', size=(4, 1), key='in11'), sg.In(default_text='0', size=(4, 1), key='in12'), sg.In(default_text='0', size=(4, 1), key='in13'),
           sg.ProgressBar(38, orientation='h', size=(5, 20), key='progbar11'),
           sg.ProgressBar(38, orientation='h', size=(5, 20), key='progbar12'),
           sg.ProgressBar(38, orientation='h', size=(5, 20), key='progbar13')],
+
+		  [sg.Text('keypress', key='debugkeypress')],
 
           [sg.In(default_text='0', size=(4, 1), key='in21'), sg.In(default_text='0', size=(4, 1), key='in22'), sg.In(default_text='0', size=(4, 1), key='in23'),
           sg.ProgressBar(38, orientation='h', size=(5, 20), key='progbar21'),
@@ -35,10 +36,18 @@ layout = [[sg.Text('Ingresar Posición deseada', font=('Helvetica', 13), key='he
 
           [sg.Submit(), sg.Cancel()]]      
 
-window = sg.Window('Demo Dispositivo', layout, font=("Helvetica", 12))      
+window = sg.Window('Demo Dispositivo', layout, font=("Helvetica", 12),return_keyboard_events=True, use_default_focus=False)      
 event = 0
+
+
 while event != sg.WIN_CLOSED or event == 'Exit' or event == 'Cancel':
 	event, values = window.read()
+
+	if event in ("Left:37", "a","Up:38", "w","Right:39", "d","Down:40", "s"):
+		textodebug=window['debugkeypress']
+		textodebug.update(str(event))
+
+
 	if event=='Cancel':
 		window.close()
 
@@ -75,12 +84,7 @@ while event != sg.WIN_CLOSED or event == 'Exit' or event == 'Cancel':
 
 			print('range:', chkrange11, chkrange12, chkrange13, chkrange21, chkrange22, chkrange23)
 
-	# Conversión a steps
-
-			stepsfloat = np.array([float(input11), float(input12), float(input13), float(input21), float(input22), float(input23)])*ratio
-			steps = stepsfloat.astype(int)
-
-			print(steps)
+			#print(steps)
 
 			if  chkrange11:
 				window['progbar11'].update_bar(values['in11'])
@@ -120,9 +124,10 @@ while event != sg.WIN_CLOSED or event == 'Exit' or event == 'Cancel':
 
 			if chkrange11 & chkrange12 & chkrange13 & chkrange21 & chkrange22 & chkrange23:
 				## Enviar comando por serial
-				stringparaenviar = '11,' + str(steps[3]) + ',' + str(steps[4]) + ',' + str(steps[5]) + ',' + str(steps[0]) + ',' + str(steps[1]) + ',' + str(steps[2])
-				stringparaenviar = stringparaenviar.encode()
+				#stringparaenviar = '11,' + str(steps[3]) + ',' + str(steps[4]) + ',' + str(steps[5]) + ',' + str(steps[0]) + ',' + str(steps[1]) + ',' + str(steps[2])
+				#stringparaenviar = stringparaenviar.encode()
 				#arduino.write(stringparaenviar)
-				print (stringparaenviar)
+				#print (stringparaenviar)
+				pass
 		else:
 			window['head'].update('Datos Inválidos')

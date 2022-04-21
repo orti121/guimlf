@@ -15,9 +15,6 @@ robot = MK2Robot(link_lengths=[55, 39, 135, 147, 66.3])
 
 def sendxyz(Xval, Yval, Zval):
     try:
-        #Xval = int(input("X: "))
-        #Yval = int(input("Y: "))
-        #Zval = int(input("Z: "))
         q0, q1, q2 = robot.inverse_kinematics(Xval, Yval, Zval)
         #robot_serial.write_servo(1, 45 + q0)
         #robot_serial.write_servo(2, 90 - q1)
@@ -31,9 +28,6 @@ def sendxyz(Xval, Yval, Zval):
         pass
 
 def sendang(q0val, q1val, q2val):
-    #q0val = int(input("q0: "))
-    #q1val = int(input("q1: "))
-    #q2val = int(input("q2: "))
     #robot_serial.write_servo(1, q0val)
     #robot_serial.write_servo(2, q1val)
     #robot_serial.write_servo(3, q2val)
