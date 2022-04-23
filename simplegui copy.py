@@ -14,7 +14,7 @@ sg.SetOptions(text_justification='right')
 
 layout = [[sg.Text('Ingresar Posición deseada', font=('Helvetica', 13), key='head')],
 
-		  [sg.Text('Modo: ') , sg.Drop(values=('XYZ','Angular'), auto_size_text=True, key='selector')],
+		  [sg.Text('Modo: ') , sg.OptionMenu(values=('XYZ','Angular'), auto_size_text=True, key='selector')],
 
           [sg.In(default_text='0', size=(4, 1), key='in11'), sg.In(default_text='0', size=(4, 1), key='in12'), sg.In(default_text='0', size=(4, 1), key='in13'),
           sg.ProgressBar(38, orientation='h', size=(5, 20), key='progbar11'),
@@ -45,7 +45,8 @@ while event != sg.WIN_CLOSED or event == 'Exit' or event == 'Cancel':
 
 	if event in ("Left:37", "a","Up:38", "w","Right:39", "d","Down:40", "s"):
 		textodebug=window['debugkeypress']
-		textodebug.update(str(event))
+		#textodebug.update(str(event))
+		textodebug.update(str(values['selector']))
 
 
 	if event=='Cancel':
