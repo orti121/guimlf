@@ -21,19 +21,31 @@ q2current = 0
 robot = MK2Robot(link_lengths=[55, 39, 135, 147, 66.3])
 delta_xyz = 1 # mm
 delta_angular = 1 # grado
+#startup_flag = True # Indica primera ejecución
 ###########################################
 
 ############### FUNCIONES #################
+def generar_string_comando (modo,x0,x1,x2):
+    comm = '{"mode" : %s, "x0" : %s , "x1" : %s , "x2" : %s }' % (modo, x0, x1, x2)
+    return comm
 
 def update_current (modo,x0,x1,x2):
 # Actualiza el texto de las coordenadas actuales
+    global xcurrent
+    global ycurrent
+    global zcurrent
+    global q0current
+    global q1current
+    global q2current
+
     if modo == 0:
         xcurrent = float(x0)
         ycurrent = float(x1)
         zcurrent = float(x2)
         try:
             q0current, q1current, q2current = robot.inverse_kinematics(xcurrent,ycurrent,zcurrent)
-            #print (q0current, q1current, q2current)
+            print (q0current, q1current, q2current)
+            #if startup_flag == False:
             window['xval'].update(str(xcurrent))
             window['yval'].update(str(ycurrent))
             window['zval'].update(str(zcurrent))
@@ -49,7 +61,8 @@ def update_current (modo,x0,x1,x2):
         q2current = float(x2)
         try:
             xcurrent, ycurrent, zcurrent = robot.forward_kinematics(q0current, q1current, q2current)
-            #print (xcurrent, ycurrent, zcurrent)
+            print (xcurrent, ycurrent, zcurrent)
+            #if startup_flag == False:
             window['xval'].update(str(xcurrent))
             window['yval'].update(str(ycurrent))
             window['zval'].update(str(zcurrent))
@@ -61,27 +74,102 @@ def update_current (modo,x0,x1,x2):
 
 
 def move_delta (modo, dir):
-    if flag_tipo_input == 0:
+    if modo == 0:
+        new_x0 = xcurrent
+        new_x1 = ycurrent
+        new_x2 = zcurrent
+
+        if dir == "+x0":
+            new_x0 = new_x0 + delta_xyz
+
+        elif dir == "-x0":
+            new_x0 = new_x0 - delta_xyz
+
+        elif dir == "+x1":
+            new_x1 = new_x1 + delta_xyz
+
+        elif dir == "-x1":
+            new_x1 = new_x1 - delta_xyz
+
+        elif dir == "+x2":
+            new_x2 = new_x2 + delta_xyz
+
+        elif dir == "-x2":
+            new_x2 = new_x2 - delta_xyz
+
+        else:
+            pass
+
+        submit_target (modo, new_x0, new_x1, new_x2)
+
+    elif modo == 1:
+
+        new_x0 = q0current
+        new_x1 = q1current
+        new_x2 = q2current
+
+        if dir == "+x0":
+            new_x0 = new_x0 + delta_angular
+
+        elif dir == "-x0":
+            new_x0 = new_x0 - delta_angular
+
+        elif dir == "+x1":
+            new_x1 = new_x1 + delta_angular
+
+        elif dir == "-x1":
+            new_x1 = new_x1 - delta_angular
+
+        elif dir == "+x2":
+            new_x2 = new_x2 + delta_angular
+
+        elif dir == "-x2":
+            new_x2 = new_x2 - delta_angular
+
+        else:
+            pass
+
+        submit_target (modo, new_x0, new_x1, new_x2)
+
+    else:
+        pass     
         # Sumar un delta al valor actual en XYZ en la dirección especificada: +x0,-x0,+x1,-x1,+x2,-x2
         # Enviar comando en modo XYZ
         # Calcular q0, q1, q2
         # Actualizar Valor actual mostrado
-        pass
+
 
 def submit_target (modo, x0, x1, x2):
     # Leer campos
     # Armar string de comando
+    string_comando = generar_string_comando(modo, x0, x1, x2)
+    print (string_comando)
     # Enviar por SSH (?)
+    send_command (string_comando)
+    # Actualizar valor actual
     update_current (modo,x0,x1,x2)
+    print (xcurrent,ycurrent,zcurrent,q0current,q1current,q2current,)
 
 def connect_SSH (path, user, pw):
     # Establecer conexión y loguearse por SSH
     pass
 
+def send_command (comando):
+    # Envía el comando de posición vía SSH
+    pass
+
 def go_home ():
+    global flag_tipo_input
     flag_tipo_input = 1
     submit_target(flag_tipo_input, 45, 90, 90)
 ############################################
+
+# Enviando a Home #
+
+#if startup_flag:
+#    print ('Initializing, going to home position')
+#    go_home()
+#    startup_flag = False
 
 # Recipe for getting keys, one at a time as they are released
 # If want to use the space bar, then be sure and disable the "default focus"
@@ -115,9 +203,10 @@ layout = [[sg.Text("Test GUI")],
 window = sg.Window("MyLittleFactory", layout,
                    return_keyboard_events=True, use_default_focus=False)
 
-
+    
 # ---===--- Loop taking in user input --- #
 while True:
+
     event, values = window.read()
     print(event)
     print(values)
