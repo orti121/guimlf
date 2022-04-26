@@ -167,6 +167,12 @@ def go_home ():
     global flag_tipo_input
     flag_tipo_input = 1
     submit_target(flag_tipo_input, 45, 90, 90)
+
+def clearInput():
+    window['in_x0'].update("0")
+    window['in_x1'].update("0")
+    window['in_x2'].update("0")
+
 ############################################
 
 # Enviando a Home #
@@ -179,27 +185,43 @@ def go_home ():
 # Recipe for getting keys, one at a time as they are released
 # If want to use the space bar, then be sure and disable the "default focus"
 
+colX = [[sg.Text("X: ", size=(2,1)), sg.Text(str(xcurrent), key='xval'), sg.Text("mm",size=(6,1))],
+
+        [sg.Text("Y: ", size=(2,1)), sg.Text(str(ycurrent), key='yval'), sg.Text("mm",size=(6,1))],
+
+        [sg.Text("Z: ", size=(2,1)), sg.Text(str(zcurrent), key='zval'), sg.Text("mm",size=(6,1))]]
+
+
+colAng = [[sg.Text("q0: ", size=(3,1)), sg.Text(str(q0current), key='q0val'), sg.Text("°")],
+
+          [sg.Text("q1: ", size=(3,1)), sg.Text(str(q1current), key='q1val'), sg.Text("°")],
+
+          [sg.Text("q2: ", size=(3,1)), sg.Text(str(q2current), key='q2val'), sg.Text("°")]]
+
+
+colInput = [[sg.Text("", key='in_x0_title', size=(1,1)), sg.In(default_text='0', key='in_x0', size=(10,1)), sg.Text("", key='mm_deg0') ],
+
+            [sg.Text("", key='in_x1_title', size=(1,1)), sg.In(default_text='0', key='in_x1', size=(10,1)), sg.Text("", key='mm_deg1') ],
+
+            [sg.Text("", key='in_x2_title', size=(1,1)), sg.In(default_text='0', key='in_x2', size=(10,1)), sg.Text("", key='mm_deg2') ]]
+
+
+
 layout = [[sg.Text("Test GUI")],
 
           [sg.Text("Modo"), sg.OptionMenu(values=("XYZ","Angular"), default_value="XYZ", key='selector',)],
 
           [sg.Text("Posición Actual")],
-          
-          [sg.Text("X: ", size=(2,1)), sg.Text(str(xcurrent), key='xval'), sg.Text("mm",size=(6,1)), sg.Text("q0: ", size=(3,1)), sg.Text(str(q0current), key='q0val'), sg.Text("°") ],
 
-          [sg.Text("Y: ", size=(2,1)), sg.Text(str(ycurrent), key='yval'), sg.Text("mm",size=(6,1)), sg.Text("q1: ", size=(3,1)), sg.Text(str(q1current), key='q1val'), sg.Text("°") ],
-
-          [sg.Text("Z: ", size=(2,1)), sg.Text(str(zcurrent), key='zval'), sg.Text("mm",size=(6,1)), sg.Text("q2: ", size=(3,1)), sg.Text(str(q2current), key='q2val'), sg.Text("°") ],
+          [sg.Column (colX), sg.Column(colAng)],
           
           [sg.Text("Target")],
 
-          [sg.Text("", key='in_x0_title', size=(1,1)), sg.In(default_text='0', key='in_x0', size=(10,1)), sg.Text("", key='mm_deg0') ],
+          [sg.Column (colInput)],
 
-          [sg.Text("", key='in_x1_title', size=(1,1)), sg.In(default_text='0', key='in_x1', size=(10,1)), sg.Text("", key='mm_deg1') ],
+          [sg.Text("", size=(45, 1), key='text')],
 
-          [sg.Text("", key='in_x2_title', size=(1,1)), sg.In(default_text='0', key='in_x2', size=(10,1)), sg.Text("", key='mm_deg2') ],
-
-          [sg.Button("Submit", key='Submit')],      
+          [sg.Button("Submit", key='Submit'),sg.Button("Clear", key='Clear')],      
 
           [sg.Text("", size=(45, 1), key='text')],
 
@@ -302,7 +324,9 @@ while True:
         print(input0, input1, input2)
         submit_target(flag_tipo_input, input0, input1, input2)
         print("-------------------------")
-    
+
+    if event =="Clear":
+        clearInput()
     # ################################################
     # 
     # 
