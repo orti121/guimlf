@@ -258,7 +258,7 @@ layout = [[sg.Text("Test GUI")],
 window = sg.Window("MyLittleFactory", layout,
                    return_keyboard_events=True, use_default_focus=False)
 ### DebugWindow ####
-sg.Print('Debug Window', do_not_reroute_stdout=False)   
+#sg.Print('Debug Window', do_not_reroute_stdout=False)   
 # ---===--- Loop taking in user input --- #
 while True:
 
@@ -318,7 +318,7 @@ while True:
             try:
                 stdin, stdout, stderr = client.exec_command(comdelta)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 result = stdout.read().decode()
 
@@ -334,7 +334,7 @@ while True:
             try:
                 stdin, stdout, stderr = client.exec_command(comdelta)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 result = stdout.read().decode()
 
@@ -350,7 +350,7 @@ while True:
             try:
                 stdin, stdout, stderr = client.exec_command(comdelta)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 result = stdout.read().decode()
 
@@ -366,7 +366,7 @@ while True:
             try:
                 stdin, stdout, stderr = client.exec_command(comdelta)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 result = stdout.read().decode()
 
@@ -382,7 +382,7 @@ while True:
             try:
                 stdin, stdout, stderr = client.exec_command(comdelta)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 result = stdout.read().decode()
 
@@ -398,7 +398,7 @@ while True:
             try:
                 stdin, stdout, stderr = client.exec_command(comdelta)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 result = stdout.read().decode()
 
@@ -437,7 +437,7 @@ while True:
             try:
                 stdin, stdout, stderr = client.exec_command(comhome)
 
-                time.sleep(0.1)
+                time.sleep(0.5)
 
                 result = stdout.read().decode()
 
@@ -468,13 +468,13 @@ while True:
 
             #### Comandos para entrar al script de Python ####
 
-            lista_inicializacion = ['ls','ls -l', 'workon mlf']
+            lista_inicializacion = ['ls', 'cd guimlf', 'cd main_pi']
 
             for comandos in lista_inicializacion:
 
                 stdin, stdout, stderr = client.exec_command(comandos)
 
-                time.sleep(1)
+                time.sleep(2)
 
                 result = stdout.read().decode()
 
