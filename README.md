@@ -102,6 +102,10 @@ En cuanto a adiciones/modificaciones deseables:
 
 # Referencias
 
+- https://pysimplegui.readthedocs.io/en/latest/cookbook/
+
+- https://pysimplegui.readthedocs.io/en/latest/call%20reference/#layout-helper-funcs
+
 - https://serverfault.com/questions/317386/reading-stdin-from-python-program-started-via-ssh-in-terminal
 
 - https://github.com/PySimpleGUI/PySimpleGUI/blob/master/DemoPrograms/Demo_Keyboard.py
