@@ -6,9 +6,9 @@ El proyecto GuiMLF presenta una interfaz gráfica sencilla para facilitar el con
 Hasta el momento el control de estos brazos se realiza conectándose vía línea de comando por SSH a su respectiva Raspberry Pi para ejecutar un script que permite controlar, vía comunicación serial, el arduino que a su vez controla uno de los brazos robóticos de My Little Factory en el FabLab de la Facultad de Ciencias Físicas y Matemáticas de la universidad de Chile.
 
 # Cómo funciona?
-Se establece un nuevo script de lado del servidor, ubicado en `GUIMLF/main_pi/test_onpi.py`, el cual recibe un comando sencillo con estructura json, `\{"mode" : --, "x0" : -- , "x1" : -- , "x2" : -- \}`.
+Se establece un nuevo script de lado del servidor, ubicado en `guimlf/main_pi/test_onpi.py`, el cual recibe un comando sencillo con estructura json, `\{"mode" : --, "x0" : -- , "x1" : -- , "x2" : -- \}`.
 
-A nivel de cliente, se utiliza la librería Paramiko para establecer la conexión vía SSH a través del script de Python `GUIMLF/main_client/GUI_MLF.py`.  
+A nivel de cliente, se utiliza la librería Paramiko para establecer la conexión vía SSH a través del script de Python `guimlf/main_client/GUI_MLF.py`.  
 Éste cuenta con una sencilla interfaz gráfica que permite tanto enviar coordenadas específicas en modo X,Y,Z o angular, como moverse gradualmente utilizando el teclado.
 
 ## Librerías utilizadas
