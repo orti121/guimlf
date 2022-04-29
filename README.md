@@ -6,7 +6,7 @@ El proyecto GuiMLF presenta una interfaz gráfica sencilla para facilitar el con
 Hasta el momento el control de estos brazos se realiza conectándose vía línea de comando por SSH a su respectiva Raspberry Pi para ejecutar un script que permite controlar, vía comunicación serial, el arduino que a su vez controla uno de los brazos robóticos de My Little Factory en el FabLab de la Facultad de Ciencias Físicas y Matemáticas de la universidad de Chile.
 
 # Cómo funciona?
-Se establece un nuevo script de lado del servidor, ubicado en `guimlf/server/test_onpi.py`, el cual recibe un comando sencillo con estructura json, `{"mode" : --, "x0" : -- , "x1" : -- , "x2" : -- }`.
+Se establece un nuevo script de lado del servidor, ubicado en `guimlf/pi_server/test_onpi.py`, el cual recibe un comando sencillo con estructura json, `{"mode" : --, "x0" : -- , "x1" : -- , "x2" : -- }`.
 
 A nivel de cliente, se utiliza la librería Paramiko para establecer la conexión vía SSH a través del script de Python `guimlf/client/GUI_MLF.py`.  
 Éste cuenta con una sencilla interfaz gráfica que permite tanto enviar coordenadas específicas en modo X,Y,Z o angular, como moverse gradualmente utilizando el teclado.
@@ -100,4 +100,17 @@ En cuanto a adiciones/modificaciones deseables:
 - Funcionalidad con joystick
 - Reordenamiento general del código para facilitar su mantención/actualización.
 
+# Referencias
+
+- https://serverfault.com/questions/317386/reading-stdin-from-python-program-started-via-ssh-in-terminal
+
+- https://github.com/PySimpleGUI/PySimpleGUI/blob/master/DemoPrograms/Demo_Keyboard.py
+
+- https://networklessons.com/python/python-ssh
+
+- https://gist.github.com/ghawkgu/944017/83089c5b513cb6175d752a63f3e3991dc2d0fce9
+
+- https://stackoverflow.com/questions/64398194/pysimplegui-login-authenticator
+
+- https://stackoverflow.com/questions/8932862/how-do-i-change-directories-using-paramiko
 
